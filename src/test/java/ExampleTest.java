@@ -34,10 +34,4 @@ class ExampleTest {
             service.addStudent(invalidStudent);
         }, "Adding invalid student should throw ValidationException");
     }
-
-    @Test
-    void exampleTestCase() {
-        System.out.println("Running an example test...");
-        assertTrue(true, "Example assertion passed");
-    }
 }
