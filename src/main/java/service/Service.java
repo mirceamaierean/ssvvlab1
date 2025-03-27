@@ -100,6 +100,7 @@ public class Service {
      * @return toti studentii din memorie
      */
     public Iterable<Student> getAllStudenti(){
+
         return studentFileRepository.findAll();
     }
 
