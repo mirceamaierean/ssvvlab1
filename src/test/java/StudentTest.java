@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
 
 @Tag("ExamplePack")
-class StudentTests {
+class StudentTest {
     private static StudentXMLRepo studentRepo;
     private static StudentValidator studentValidator;
     private static Service service;
