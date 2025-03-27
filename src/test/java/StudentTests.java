@@ -17,11 +17,11 @@ class StudentTests {
 
     @Test
     void testAddValidStudent() {
-        Student student = new Student("1", "John Doe", 935, "john@example.com");
+        Student student = new Student("1", "John", 935, "john@example.com");
         Student result = service.addStudent(student);
         assertNotNull(result, "Added student should not be null");
         assertEquals("1", result.getID(), "Student ID should match");
-        assertEquals("John Doe", result.getNume(), "Student name should match");
+        assertEquals("John", result.getNume(), "Student name should match");
         assertEquals(935, result.getGrupa(), "Student group should match");
         assertEquals("john@example.com", result.getEmail(), "Student email should match");
     }
@@ -35,11 +35,10 @@ class StudentTests {
         }, "Adding invalid student should throw ValidationException");
     }
 
-
     @Test
-    void exampleTestCase() {
-        System.out.println("Running an example test...");
-        assertTrue(true, "Example assertion passed");
+    void testAddNullStudent() {
+        Student student = null;
+        assertThrows(ValidationException.class, () -> service.addStudent(student));
     }
 
     @Test
@@ -114,5 +113,13 @@ class StudentTests {
     void testValidStudent_AllValid() {
         Student student = new Student("1", "Alex", 0, "alex@gmail.com");
         assertDoesNotThrow(() -> service.addStudent(student));
+    }
+
+    @Test
+    void addDuplicateStudent() {
+        Student student = new Student("1", "Alex", 0, "alex@gmail.com");
+        service.addStudent(student);
+        Student s = service.addStudent(student);
+        assert (student == s);
     }
 }
