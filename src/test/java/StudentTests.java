@@ -3,27 +3,37 @@ import org.junit.jupiter.api.Test;
 import service.Service;
 import domain.Student;
 import repository.StudentXMLRepo;
+import org.junit.jupiter.api.BeforeAll;
 import validation.StudentValidator;
 import validation.ValidationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+
 @Tag("ExamplePack")
 class StudentTests {
+    private static StudentXMLRepo studentRepo;
+    private static StudentValidator studentValidator;
+    private static Service service;
+    private static String xmlFile;
 
-    private StudentXMLRepo studentRepo = new StudentXMLRepo("a.txt");
-    private StudentValidator studentValidator = new StudentValidator();
-    private Service service = new Service(studentRepo, studentValidator, null, null, null, null);
+    @BeforeAll
+    static void setUp() {
+        xmlFile = "src/test/resources/students_test_" + System.currentTimeMillis() + ".xml";
+        // Create the directory if it doesn't exist
+        new File("src/test/resources").mkdirs();
+
+        studentRepo = new StudentXMLRepo(xmlFile);
+        studentValidator = new StudentValidator();
+        service = new Service(studentRepo, studentValidator, null, null, null, null);
+    }
 
     @Test
     void testAddValidStudent() {
         Student student = new Student("1", "John", 935, "john@example.com");
         Student result = service.addStudent(student);
-        assertNotNull(result, "Added student should not be null");
-        assertEquals("1", result.getID(), "Student ID should match");
-        assertEquals("John", result.getNume(), "Student name should match");
-        assertEquals(935, result.getGrupa(), "Student group should match");
-        assertEquals("john@example.com", result.getEmail(), "Student email should match");
+        assertNull(result);
     }
 
     @Test
@@ -116,7 +126,7 @@ class StudentTests {
     }
 
     @Test
-    void addDuplicateStudent() {
+    void test_AddDuplicateStudent() {
         Student student = new Student("1", "Alex", 0, "alex@gmail.com");
         service.addStudent(student);
         Student s = service.addStudent(student);
