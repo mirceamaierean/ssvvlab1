@@ -49,6 +49,17 @@ class AssignmentTest {
     }
 
     @Test
+    void testAddAssignmentWithInvalidId() {
+        // Test Invaid ID validation - covers the ID validation branch
+        Tema tema = new Tema("", "", 10, 8);
+
+        ValidationException exception = assertThrows(ValidationException.class, () -> {
+            service.addTema(tema);
+        });
+        assertEquals("Numar tema invalid!", exception.getMessage());
+    }
+
+    @Test
     void testAddAssignmentWithInvalidDeadline() {
         // Test invalid deadline validation - covers the deadline validation branch
         Tema tema = new Tema("1", "Test Assignment", 15, 8);
